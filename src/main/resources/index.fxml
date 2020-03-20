@@ -14,7 +14,7 @@
       fx:controller="de.churl.feeder.FeederController"
       fx:id="pane"
       stylesheets="style.css"
-      prefHeight="500.0" prefWidth="750.0">
+      prefHeight="500.0">
 
     <VBox spacing="10" style="-fx-padding: 10 10 10 10">
         <HBox spacing="10">
@@ -33,7 +33,7 @@
             </VBox>
             <VBox spacing="10">
                 <HBox spacing="10">
-                    <Button onAction="#addBtn" text="Add" style="-fx-pref-width: 95"/>
+                    <Button onAction="#addBtn" text="Add"/>
                     <Button onAction="#removeBtn" text="Remove"/>
                     <Button onAction="#saveBtn" text="Save"/>
                 </HBox>

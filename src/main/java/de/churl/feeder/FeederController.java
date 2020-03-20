@@ -1,7 +1,7 @@
 package de.churl.feeder;
 
 import de.churl.feeder.domain.EventType;
-import de.churl.feeder.domain.TreeElement;
+import de.churl.feeder.gruppen2.EventBuilder;
 import de.churl.feeder.gruppen2.event.Event;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class FeederController {
 
@@ -39,7 +40,7 @@ public class FeederController {
     public TextField groupId;
 
     @FXML
-    public TreeView<TreeElement> tree;
+    public TreeView<Event> tree;
 
     private Stage primaryStage;
     private final List<Event> eventlist = new LinkedList<>();
@@ -77,12 +78,29 @@ public class FeederController {
     }
 
     @FXML
-    public void removeBtn(ActionEvent actionEvent) {
+    public void addBtn(ActionEvent actionEvent) {
+        switch (eventtype.getValue()) {
+            case CREATESINGLE:
+                eventlist.addAll(EventBuilder.completeGroup(users.getValue()));
+                break;
+            case ADD:
+                eventlist.addAll(EventBuilder.addUserEvents(users.getValue(), randomGroup()));
+                break;
+            case REMOVE:
+                eventlist.addAll(EventBuilder.deleteUserEvents(users.getValue(), eventlist));
+                break;
+            case CREATEMULTI:
+                eventlist.addAll(EventBuilder.completeGroups(groups.getValue(), users.getValue()));
+                break;
+        }
+    }
 
+    private String randomUsers(long groupid) {
+        return null;
     }
 
     @FXML
-    public void addBtn(ActionEvent actionEvent) {
+    public void removeBtn(ActionEvent actionEvent) {
 
     }
 
@@ -99,5 +117,11 @@ public class FeederController {
 
     private String getData() {
         return "Test";
+    }
+
+    private long randomGroup() {
+        int index = (new Random()).nextInt(eventlist.size() - 1);
+
+        return eventlist.get(index).getGroupId();
     }
 }

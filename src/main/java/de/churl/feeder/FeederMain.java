@@ -8,9 +8,6 @@ import javafx.stage.Stage;
 
 public class FeederMain extends Application {
 
-    private static final int WIDTH = 750;
-    private static final int HEIGHT = 500;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -23,7 +20,7 @@ public class FeederMain extends Application {
         primaryStage.setTitle("Gruppen2 Feeder");
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+        primaryStage.setScene(new Scene(root));
 
         primaryStage.show();
     }
