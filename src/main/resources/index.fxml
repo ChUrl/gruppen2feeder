@@ -20,7 +20,8 @@
         <HBox spacing="10">
             <VBox spacing="10">
                 <HBox spacing="10">
-                    <ComboBox fx:id="eventtype" promptText="Event Type"/>
+                    <ComboBox onAction="#eventtypeSelect" fx:id="eventtype"
+                              promptText="Event Type"/>
                     <Spinner fx:id="groups" promptText="Groups"/>
                 </HBox>
                 <Label text="Following items will be added to data.sql:"

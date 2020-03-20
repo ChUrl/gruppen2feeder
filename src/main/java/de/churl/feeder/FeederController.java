@@ -44,8 +44,36 @@ public class FeederController {
     private Stage primaryStage;
     private final List<Event> eventlist = new LinkedList<>();
 
+    public void initialize() {
+        eventtype.getItems().addAll(EventType.CREATESINGLE,
+                                    EventType.CREATEMULTI,
+                                    EventType.ADD,
+                                    EventType.REMOVE,
+                                    EventType.DESTROY);
+    }
+
     void setStage(Stage stage) {
         primaryStage = stage;
+    }
+
+    @FXML
+    public void eventtypeSelect(ActionEvent actionEvent) {
+        switch (eventtype.getValue()) {
+            case CREATESINGLE:
+            case ADD:
+            case REMOVE:
+                groups.setDisable(true);
+                users.setDisable(false);
+                break;
+            case CREATEMULTI:
+                groups.setDisable(false);
+                users.setDisable(false);
+                break;
+            case DESTROY:
+                groups.setDisable(true);
+                users.setDisable(true);
+                break;
+        }
     }
 
     @FXML
