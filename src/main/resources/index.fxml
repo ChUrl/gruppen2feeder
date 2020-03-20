@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="de.churl.feeder.FeederController"
+            prefHeight="500.0" prefWidth="750.0">
+
+    <top>
+        <VBox prefWidth="Infinity" prefHeight="100" style="-fx-background-color: aliceblue">
+
+        </VBox>
+    </top>
+
+    <center>
+
+    </center>
+
+</BorderPane>
