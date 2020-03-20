@@ -2,6 +2,7 @@ package de.churl.feeder;
 
 import de.churl.feeder.domain.EventType;
 import de.churl.feeder.domain.TreeElement;
+import de.churl.feeder.gruppen2.event.Event;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -17,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FeederController {
 
@@ -39,6 +42,7 @@ public class FeederController {
     public TreeView<TreeElement> tree;
 
     private Stage primaryStage;
+    private final List<Event> eventlist = new LinkedList<>();
 
     void setStage(Stage stage) {
         primaryStage = stage;
