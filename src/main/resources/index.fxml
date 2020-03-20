@@ -5,51 +5,41 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="de.churl.feeder.FeederController"
-            stylesheets="style.css"
-            prefHeight="500.0" prefWidth="750.0">
+<Pane xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="de.churl.feeder.FeederController"
+      fx:id="pane"
+      stylesheets="style.css"
+      prefHeight="500.0" prefWidth="750.0">
 
-    <top>
-        <ToolBar prefWidth="Infinity">
-            <Button onAction="#fileChooserBtn" text="Choose File"/>
-            <TextField style="-fx-pref-width: 535"/>
-            <Button onAction="#saveBtn" text="Save"/>
-            <Button onAction="#quitBtn" text="Quit"/>
-        </ToolBar>
-    </top>
+    <VBox spacing="10" style="-fx-padding: 10 10 10 10">
+        <HBox spacing="10">
+            <VBox spacing="10">
+                <HBox spacing="10">
+                    <ComboBox fx:id="eventtype" promptText="Event Type"/>
+                    <Spinner fx:id="groups" promptText="Groups"/>
+                </HBox>
+                <Label text="Following items will be added to data.sql:"
+                       style="-fx-pref-height: 25"/>
+            </VBox>
+            <VBox spacing="10">
+                <Spinner fx:id="users" promptText="Users"/>
+                <Label text="GroupID:" style="-fx-pref-height: 25"/>
+            </VBox>
+            <VBox spacing="10">
+                <HBox spacing="10">
+                    <Button onAction="#addBtn" text="Add" style="-fx-pref-width: 95"/>
+                    <Button onAction="#removeBtn" text="Remove"/>
+                    <Button onAction="#saveBtn" text="Save"/>
+                </HBox>
+                <TextField fx:id="groupId" editable="false"/>
+            </VBox>
+        </HBox>
+        <TreeView fx:id="tree"/>
+    </VBox>
 
-    <center>
-        <VBox spacing="10" style="-fx-padding: 10 10 10 10">
-            <HBox spacing="10">
-                <VBox spacing="10">
-                    <HBox spacing="10">
-                        <ComboBox fx:id="eventtype" promptText="Event Type"/>
-                        <Spinner fx:id="groups" promptText="Groups"/>
-                    </HBox>
-                    <Label text="Following items will be added to data.sql:"
-                           style="-fx-pref-height: 25"/>
-                </VBox>
-                <VBox spacing="10">
-                    <Spinner fx:id="users" promptText="Users"/>
-                    <Label text="GroupID:" style="-fx-pref-height: 25"/>
-                </VBox>
-                <VBox spacing="10">
-                    <HBox spacing="10">
-                        <Button onAction="#addBtn" style="-fx-pref-width: 95" text="Add"/>
-                        <Button onAction="#removeBtn" text="Remove Selected"/>
-                    </HBox>
-                    <TextField fx:id="groupId" editable="false"/>
-                </VBox>
-            </HBox>
-            <TreeView fx:id="tree"/>
-        </VBox>
-    </center>
-
-</BorderPane>
+</Pane>

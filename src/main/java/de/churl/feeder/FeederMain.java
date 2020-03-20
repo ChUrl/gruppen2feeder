@@ -17,6 +17,9 @@ public class FeederMain extends Application {
         loader.setLocation(getClass().getResource("/index.fxml"));
         Parent root = loader.load();
 
+        FeederController controller = loader.getController();
+        controller.setStage(primaryStage);
+
         primaryStage.setTitle("Gruppen2 Feeder");
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
