@@ -18,8 +18,10 @@ public class FeederMain extends Application {
         Parent root = loader.load();
 
         primaryStage.setTitle("Gruppen2 Feeder");
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+
         primaryStage.show();
     }
 }
