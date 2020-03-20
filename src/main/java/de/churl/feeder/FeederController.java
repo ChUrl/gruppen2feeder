@@ -33,4 +33,19 @@ public class FeederController {
     public void addBtn(ActionEvent actionEvent) {
 
     }
+
+    @FXML
+    public void fileChooserBtn(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void saveBtn(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void quitBtn(ActionEvent actionEvent) {
+
+    }
 }

@@ -18,10 +18,10 @@
 
     <top>
         <ToolBar prefWidth="Infinity">
-            <Button text="Choose File"/>
+            <Button onAction="#fileChooserBtn" text="Choose File"/>
             <TextField style="-fx-pref-width: 535"/>
-            <Button text="Save"/>
-            <Button text="Quit"/>
+            <Button onAction="#saveBtn" text="Save"/>
+            <Button onAction="#quitBtn" text="Quit"/>
         </ToolBar>
     </top>
 
