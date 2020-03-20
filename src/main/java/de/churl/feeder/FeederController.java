@@ -1,13 +1,16 @@
 package de.churl.feeder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.churl.feeder.domain.EventType;
 import de.churl.feeder.gruppen2.EventBuilder;
+import de.churl.feeder.gruppen2.event.CreateGroupEvent;
 import de.churl.feeder.gruppen2.event.Event;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -30,11 +33,9 @@ public class FeederController {
     @FXML
     public ComboBox<EventType> eventtype;
 
+    private final TreeItem<Event> treeroot = new TreeItem<>();
     @FXML
-    public Spinner<Integer> groups;
-
-    @FXML
-    public Spinner<Integer> users;
+    public TextField groups;
 
     @FXML
     public TextField groupId;
@@ -44,6 +45,8 @@ public class FeederController {
 
     private Stage primaryStage;
     private final List<Event> eventlist = new LinkedList<>();
+    @FXML
+    public TextField users;
 
     public void initialize() {
         eventtype.getItems().addAll(EventType.CREATESINGLE,
@@ -51,6 +54,9 @@ public class FeederController {
                                     EventType.ADD,
                                     EventType.REMOVE,
                                     EventType.DESTROY);
+
+        tree.setRoot(treeroot);
+        tree.setShowRoot(false);
     }
 
     void setStage(Stage stage) {
@@ -79,20 +85,25 @@ public class FeederController {
 
     @FXML
     public void addBtn(ActionEvent actionEvent) {
+        List<Event> newEvents = new LinkedList<>();
+
         switch (eventtype.getValue()) {
             case CREATESINGLE:
-                eventlist.addAll(EventBuilder.completeGroup(users.getValue()));
+                newEvents.addAll(EventBuilder.completeGroup(Integer.parseInt(users.getText())));
                 break;
             case ADD:
-                eventlist.addAll(EventBuilder.addUserEvents(users.getValue(), randomGroup()));
+                newEvents.addAll(EventBuilder.addUserEvents(Integer.parseInt(users.getText()), randomGroup()));
                 break;
             case REMOVE:
-                eventlist.addAll(EventBuilder.deleteUserEvents(users.getValue(), eventlist));
+                newEvents.addAll(EventBuilder.deleteUserEvents(Integer.parseInt(users.getText()), eventlist));
                 break;
             case CREATEMULTI:
-                eventlist.addAll(EventBuilder.completeGroups(groups.getValue(), users.getValue()));
+                newEvents.addAll(EventBuilder.completeGroups(Integer.parseInt(groups.getText()), Integer.parseInt(users.getText())));
                 break;
         }
+
+        updateTree(newEvents);
+        eventlist.addAll(newEvents);
     }
 
     private String randomUsers(long groupid) {
@@ -115,13 +126,46 @@ public class FeederController {
         System.out.println(path);
     }
 
-    private String getData() {
-        return "Test";
+    private String getData() throws JsonProcessingException {
+        StringBuilder builder = new StringBuilder();
+        ObjectMapper mapper = new ObjectMapper();
+
+        builder.append("INSERT INTO event values\n");
+        for (int i = 1; i < eventlist.size(); i++) {
+            builder.append("(");
+            builder.append(i);
+            builder.append(",");
+            builder.append(eventlist.get(i).getGroupId());
+            builder.append(",'");
+            builder.append(eventlist.get(i).getUserId());
+            builder.append("','");
+            builder.append(mapper.writeValueAsString(eventlist.get(i)));
+            builder.append("',");
+            builder.append("TRUE");
+            builder.append(");\n");
+        }
+
+        return builder.toString();
     }
 
     private long randomGroup() {
         int index = (new Random()).nextInt(eventlist.size() - 1);
 
         return eventlist.get(index).getGroupId();
+    }
+
+    private void updateTree(List<Event> newEvents) {
+        for (Event event : newEvents) {
+            if (event instanceof CreateGroupEvent) {
+                treeroot.getChildren().add(new TreeItem<>(event));
+            }
+
+            treeroot.getChildren().parallelStream()
+                    .filter(item -> item.getValue().getGroupId().equals(event.getGroupId()))
+                    .findFirst()
+                    .get()
+                    .getChildren()
+                    .add(new TreeItem<>(event));
+        }
     }
 }
