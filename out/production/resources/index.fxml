@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<Pane xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="de.churl.feeder.FeederController"
+      fx:id="pane"
+      stylesheets="style.css"
+      prefHeight="500.0">
+
+    <VBox spacing="10" style="-fx-padding: 10 10 10 10">
+        <HBox spacing="10">
+            <VBox spacing="10">
+                <HBox spacing="10">
+                    <ComboBox onAction="#eventtypeSelect" fx:id="eventtype"
+                              promptText="Event Type"/>
+                    <TextField fx:id="groups" promptText="Groups"/>
+                </HBox>
+                <Label text="Following items will be added to data.sql:"
+                       style="-fx-pref-height: 25"/>
+            </VBox>
+            <VBox spacing="10">
+                <TextField fx:id="users" promptText="Users"/>
+                <Label text="GroupID:" style="-fx-pref-height: 25"/>
+            </VBox>
+            <VBox spacing="10">
+                <HBox spacing="10">
+                    <Button onAction="#addBtn" text="Add"/>
+                    <Button onAction="#removeBtn" text="Remove"/>
+                    <Button onAction="#saveBtn" text="Save"/>
+                </HBox>
+                <TextField fx:id="groupId" editable="false"/>
+            </VBox>
+        </HBox>
+        <TreeView fx:id="tree"/>
+    </VBox>
+
+</Pane>

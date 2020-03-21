@@ -130,10 +130,10 @@ public class FeederController {
         StringBuilder builder = new StringBuilder();
         ObjectMapper mapper = new ObjectMapper();
 
-        builder.append("INSERT INTO event values\n");
-        for (int i = 1; i < eventlist.size(); i++) {
+        builder.append("INSERT INTO event VALUES\n");
+        for (int i = 0; i < eventlist.size(); i++) {
             builder.append("(");
-            builder.append(i);
+            builder.append(i + 1);
             builder.append(",");
             builder.append(eventlist.get(i).getGroupId());
             builder.append(",'");
@@ -142,8 +142,10 @@ public class FeederController {
             builder.append(mapper.writeValueAsString(eventlist.get(i)));
             builder.append("',");
             builder.append("TRUE");
-            builder.append(");\n");
+            builder.append("),\n");
         }
+
+        builder.replace(builder.lastIndexOf(","), builder.lastIndexOf(",") + 1, ";");
 
         return builder.toString();
     }
