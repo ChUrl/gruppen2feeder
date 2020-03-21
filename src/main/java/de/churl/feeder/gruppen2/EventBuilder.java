@@ -11,6 +11,7 @@ import de.churl.feeder.gruppen2.event.UpdateRoleEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -121,14 +122,17 @@ public class EventBuilder {
 
     public static List<Event> deleteUserEvents(int count, List<Event> eventList) {
         List<Event> removeEvents = new ArrayList<>();
+        List<Event> shuffle = eventList.parallelStream()
+                                       .filter(event -> event instanceof AddUserEvent)
+                                       .collect(Collectors.toList());
 
-        for (Event event : eventList) {
-            if (event instanceof AddUserEvent) {
-                removeEvents.add(new DeleteUserEvent(event.getGroupId(), event.getUserId()));
+        Collections.shuffle(shuffle);
 
-                if (removeEvents.size() >= count) {
-                    break;
-                }
+        for (Event event : shuffle) {
+            removeEvents.add(new DeleteUserEvent(event.getGroupId(), event.getUserId()));
+
+            if (removeEvents.size() >= count) {
+                break;
             }
         }
 
