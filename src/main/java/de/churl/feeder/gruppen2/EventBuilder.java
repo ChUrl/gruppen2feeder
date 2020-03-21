@@ -58,7 +58,7 @@ public class EventBuilder {
 
     public static List<Event> completeGroup(int membercount) {
         List<Event> eventList = new ArrayList<>();
-        long groupId = faker.random().nextInt(10);
+        long groupId = faker.random().nextInt(Integer.MAX_VALUE);
 
         eventList.add(createGroupEvent(groupId));
         eventList.add(updateGroupTitleEvent(groupId));
