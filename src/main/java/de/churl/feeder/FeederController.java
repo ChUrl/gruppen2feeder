@@ -142,7 +142,7 @@ public class FeederController {
             builder.append(mapper.writeValueAsString(eventlist.get(i)));
             builder.append("',");
             builder.append("TRUE");
-            builder.append(");\n");
+            builder.append("),\n");
         }
 
         return builder.toString();
