@@ -139,10 +139,10 @@ public class FeederController {
             builder.append(",'");
             builder.append(eventlist.get(i).getUserId());
             builder.append("','");
+            builder.append(eventlist.get(i).getClass().getName().substring(eventlist.get(i).getClass().getName().lastIndexOf('.') + 1));
+            builder.append("','");
             builder.append(mapper.writeValueAsString(eventlist.get(i)));
-            builder.append("',");
-            builder.append("TRUE");
-            builder.append("),\n");
+            builder.append("'),\n");
         }
 
         builder.replace(builder.lastIndexOf(","), builder.lastIndexOf(",") + 1, ";");
